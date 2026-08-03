@@ -1,0 +1,21 @@
+# Core Web Framework
+Flask==3.1.0
+Flask-Cors==5.0.0
+
+# Database Layer (SQLAlchemy ORM & MySQL Driver)
+Flask-SQLAlchemy==3.1.1
+cryptography==44.0.0
+PyMySQL==1.1.1
+
+# Environment Variable & Configuration Security
+python-dotenv==1.0.1
+
+# High-Performance Audio Metadata Extraction
+tinytag==2.0.0
+mutagen==1.47.0
+
+# Production WSGI HTTP Server (Linux/macOS deployment)
+gunicorn==23.0.0
+
+# WSGI Alternative for Windows Deployment
+waitress==3.0.2

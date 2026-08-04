@@ -76,7 +76,17 @@ def create_app(config_name="development"):
     swagger.init_app(app)
     
     
-    
+    from App import models
+    with app.app_context():
+        try:
+            from App.Utils.Scanner import scan_local_music_folder
+            
+            MUSIC_PATH = r"N:\youtub_songs"
+            
+            print("Checking storage for new song")
+            scan_local_music_folder(MUSIC_PATH)
+        except Exception as e:
+            print(f"Scanner intialization failed: {str(e)}")
     
     return app
     

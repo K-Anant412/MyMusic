@@ -19,3 +19,6 @@ gunicorn==23.0.0
 
 # WSGI Alternative for Windows Deployment
 waitress==3.0.2
+
+# For testing
+flasgger

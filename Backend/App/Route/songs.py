@@ -87,7 +87,7 @@ def search_song_byName(name):
     Search song by Title
     ---
     tags:
-        - Search song by ID
+        - Search song by Title
     parameters:
         - in: path
           name: name
@@ -291,7 +291,7 @@ def add_song_toPlaylist(playlist_id, id):
     Add Song to Playlist
     ---
     tags:
-        - Playlist
+        - Add song to Playlist
 
     parameters:
       - in: path
@@ -419,8 +419,53 @@ def remove_playlist(id):
         return error_response(message=str(e))
     
     
-
+@song_route.route("/remove_song_from_playlists/<int:playlist_id>/songs/<int:song_id>", methods=["DELETE"])
+def remove_song_playlist(playlist_id,song_id):
+    """
+    Remove Song to Playlist
+    ---
+    tags:
+        - Remove song from Playlist
     
+    parameters:
+      - in: path
+        name: playlist_id
+        type: integer
+        required: true
+        description: ID of the playlist
+    
+      - in: path
+        name: song_id
+        type: integer
+        required: true
+        description: ID of the song to add
+    
+    responses:
+        404:
+            description: Song or playlist not found
+    """
+    try:
+        playlist = Playlist.query.get(playlist_id)
+        song = Songs.query.get(song_id)
+        
+        if not playlist:
+            return error_response("Playlist not exist.")
+        if not song:
+            return error_response("Song not exist.")
+ 
+        if not song in playlist.songs:
+            return error_response("Song not exist in playlist")
+        
+        name = song.title
+        playlist_name = playlist.name
+        
+        playlist.songs.remove(song)
+        db.session.commit()
+        
+        return success_response(message=f"{name} removed from {playlist_name}")
+    
+    except Exception as e:
+        return error_response(message=str(e))   
     
     
     

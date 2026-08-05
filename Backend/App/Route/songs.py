@@ -78,3 +78,45 @@ def search_song_byId(id):
         return success_response("Song found: ", data=song)
     except Exception as e:
         return error_response(message=str(e))
+
+
+@song_route.route("/search_by_title/<string:name>", methods=["GET"])
+def search_song_byName(name):
+    """
+    Search song by Title
+    ---
+    tags:
+        - Search song by ID
+    parameters:
+        - in: path
+          name: name
+          type: string
+          required: true
+          description: Song Title
+    responses:
+        200:
+            description: Song found successfully
+        404:
+            description: Song not found
+    """
+    try:
+        song_data = Songs.query.filter_by(title=name).first()
+        
+        if not song_data:
+            return error_response("Song not found.")
+        
+        song = {
+                    "id": song_data.song_id,
+                    "title": song_data.title,
+                    "artist": song_data.artist,
+                    "album": song_data.album,
+                    "duration": song_data.duration,
+                    "is_favorite": song_data.is_favorite,
+                }
+        
+        return success_response("Song found: ", data=song)
+        
+    except Exception as e:
+        return error_response(message=str(e))
+
+

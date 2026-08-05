@@ -220,7 +220,33 @@ def remove_song(id):
 
 
 # Playlist's routes
-# @song_route.route("/")
+@song_route.route("/show_playlists", methods=["GET"])
+def show_allPlaylist():
+    """
+    Get all playlists
+    ---
+    tags:
+        - PlayLists
+    responses:
+        200:
+            description: A list of playlists
+    """
+    try:
+        data = Playlist.query.all()
+        
+        if not data:
+            return error_response("Playlists are not exist yet.")
+        
+        playlists = []
+        for play in data:
+            playlists.append({
+                "id":play.id,
+                "name":play.name
+            })
+        
+        return success_response(message="Playlists: ", data=playlists)
+    except Exception as e:
+        return error_response(message=str(e))
 
 @song_route.route("/create_playlist/<string:name>", methods=["POST"])
 def create_playlist(name):

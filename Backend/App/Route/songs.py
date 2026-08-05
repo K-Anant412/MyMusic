@@ -337,3 +337,92 @@ def add_song_toPlaylist(playlist_id, id):
         return error_response(message=str(e))
 
 
+@song_route.route("/playlist_songs/<int:playlist_id>", methods=["GET"])
+def playlist_songs(playlist_id):
+    """
+    Playlist's songs
+    ---
+    tags:
+        - Playlist songs
+    
+    parameters:
+      - in: path
+        name: playlist_id
+        type: integer
+        required: true
+        description: ID of the playlist
+    
+    responses:
+        200:
+            description: Song added to playlist successfully
+    
+        400:
+            description: Song already exists in playlist
+    
+        404:
+            description: Song or playlist not found
+    """
+    try:
+        playlist = Playlist.query.get(playlist_id)
+        if not playlist:
+            return error_response("Playlist not found.")
+        
+        songs = []
+        
+        for song in playlist.songs:
+            songs.append({
+                "id":song.song_id,
+                "title":song.title,
+                "artist":song.artist,
+                "album":song.album,
+                "duration":song.duration
+            })
+            
+        return success_response(message=f"Songs in {playlist.name}: ", data=songs)
+    
+    except Exception as e:
+        return error_response(message=str(e))
+    
+    
+@song_route.route("/remove_playlist/<int:id>", methods=["DELETE"])
+def remove_playlist(id):
+    """
+    Removed playlist by ID
+    ---
+    tags:
+        - Remove playlist by ID
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Playlist ID
+    responses:
+        200:
+            description: Playlist found successfully
+        404:
+            description: Playlist not found
+    """
+    try:
+        playlist = Playlist.query.get(id)
+        
+        if not playlist:
+            return error_response(message="Playlist not exist")
+        
+        name = playlist.name
+        
+        db.session.delete(playlist)
+        db.session.commit()
+        
+        return success_response(message=f"{name} was removed.")
+    except Exception as e:
+        return error_response(message=str(e))
+    
+    
+
+    
+    
+    
+    
+    
+    

@@ -6,7 +6,9 @@ function App() {
 
   return (
     <>
-      <Home />
+      <section className='w-screen h-screen overflow-hidden flex items-center justify-center'>
+        <Home />
+      </section>
     </>
   )
 }

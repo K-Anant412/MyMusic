@@ -182,3 +182,39 @@ def update_song_data(id):
         return success_response(message="Song updated")
     except Exception as e:
         return error_response(message=str(e))
+
+
+@song_route.route("/remove_song/<int:id>", methods=["DELETE"])
+def remove_song(id):
+    """
+    Removed song by ID
+    ---
+    tags:
+        - Remove song by ID
+    parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Song ID
+    responses:
+        200:
+            description: Song found successfully
+        404:
+            description: Song not found
+    """
+    try:
+        song = Songs.query.get(id)
+        
+        if not song:
+            return error_response("Song not found.")
+        
+        db.session.delete(song)
+        db.session.commit()
+        
+        return success_response("Song removed from db")
+    
+    except Exception as e:
+        return error_response(message=str(e))
+
+

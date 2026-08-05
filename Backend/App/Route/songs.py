@@ -74,6 +74,7 @@ def search_song_byId(id):
             "album": song_data.album,
             "duration": song_data.duration,
             "is_favorite": song_data.is_favorite,
+            "path":song.file_path
         }
 
         return success_response("Song found: ", data=song)
@@ -113,6 +114,7 @@ def search_song_byName(name):
             "album": song_data.album,
             "duration": song_data.duration,
             "is_favorite": song_data.is_favorite,
+            "path":song.file_path
         }
 
         return success_response("Song found: ", data=song)
@@ -466,8 +468,5 @@ def remove_song_playlist(playlist_id,song_id):
     
     except Exception as e:
         return error_response(message=str(e))   
-    
-    
-    
-    
+        
     

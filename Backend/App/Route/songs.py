@@ -7,6 +7,7 @@ import os
 song_route = Blueprint("song", __name__)
 
 
+# Songs routes
 @song_route.route("/get_songs", methods=["GET"])
 def show_all_songs():
     """
@@ -218,3 +219,41 @@ def remove_song(id):
         return error_response(message=str(e))
 
 
+# Playlist's routes
+# @song_route.route("/")
+
+@song_route.route("/create_playlist/<string:name>", methods=["POST"])
+def create_playlist(name):
+    """
+    Create new playlist
+    ---
+    tags:
+        - Create new playlist
+    parameters:
+        - in: path
+          name: name
+          type: string
+          required: true
+          description: playlist name
+    responses:
+        200:
+            description: playlist created
+        404:
+            description: Song not found
+    """
+    try:
+        playlist_name = name
+        
+        existing = Playlist.query.filter_by(name=playlist_name).first()
+        
+        if existing:
+            return error_response("Playlist already exist.")
+        
+        new_playlist = Playlist(name=playlist_name)
+        db.session.add(new_playlist)
+        db.session.commit()
+        
+        return success_response(message=f"New playlist was created: {playlist_name}")
+    
+    except Exception as e:
+        return error_response(str(e))

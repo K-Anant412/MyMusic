@@ -283,3 +283,57 @@ def create_playlist(name):
     
     except Exception as e:
         return error_response(str(e))
+
+
+@song_route.route("/playlists/<int:playlist_id>/songs/<int:id>", methods=["POST"])
+def add_song_toPlaylist(playlist_id, id):
+    """
+    Add Song to Playlist
+    ---
+    tags:
+        - Playlist
+
+    parameters:
+      - in: path
+        name: playlist_id
+        type: integer
+        required: true
+        description: ID of the playlist
+
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: ID of the song to add
+
+    responses:
+        200:
+            description: Song added to playlist successfully
+
+        400:
+            description: Song already exists in playlist
+
+        404:
+            description: Song or playlist not found
+    """
+    try:
+        playlist = Playlist.query.get(playlist_id)
+        song = Songs.query.get(id)
+        
+        if not song:
+            return error_response("Song not found.")
+        if not playlist:
+            return error_response("Playlist not found.")
+        
+        if song in playlist.songs:
+            return error_response("Song already exists in playlist.")
+        
+        playlist.songs.append(song)
+        db.session.commit()
+        
+        return success_response(message="Song was added successfully.")
+    
+    except Exception as e:
+        return error_response(message=str(e))
+
+

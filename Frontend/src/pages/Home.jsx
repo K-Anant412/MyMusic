@@ -1,38 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Outlet } from 'react-router-dom'
-import { songService } from '../service/api'
 import Navbar from '../components/Navbar'
 
 const Home = () => {
-
-  // const [songList, setSongList] = useState([])
-  // const [loading, setLoading] = useState(false)
-  // const [error, setError] = useState(null)
-
-  // useEffect(() => {
-  //   const fetchSongs = async() =>{
-  //     try {
-  //       setLoading(true);
-
-  //       const response = await songService.getSongs();
-
-  //       if( response.data && response.data.success ){
-  //         setSongList(response.data.data);
-  //         console.log("Fetched SOngs: ",response.data.data);
-  //       }
-
-  //     } catch (err) {
-
-  //       console.error("Error fetching tracks from server: ", err);
-  //       setError("Could not connect to the music server.")
-
-  //     }finally{
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchSongs();
-  // }, [])
-  
 
   return (
     <>

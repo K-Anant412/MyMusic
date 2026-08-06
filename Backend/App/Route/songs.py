@@ -33,6 +33,8 @@ def show_all_songs():
                     "title": song.title,
                     "artist": song.artist,
                     "is_favorite": song.is_favorite,
+                    "album": song.album,
+                    "duration": song.duration
                 }
             )
 

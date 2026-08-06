@@ -32,6 +32,10 @@ const Navbar = () => {
                     Albums
                   </NavLink>
 
+                  <NavLink to='/favorites' className='md:block hidden w-fit p-1 text-xl md:text-2xl font-semibold text-white'>
+                    Favorites
+                  </NavLink>
+
             </ul>
 
             <div className='w-full h-fit p-1 flex flex-col'>

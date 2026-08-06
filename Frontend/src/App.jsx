@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Songs from './pages/Songs'
 import Playlists from './pages/Playlists'
 import Albums from './pages/Albums'
+import Favorites from './pages/Favorites'
 import Controller from './pages/Controller'
 
 
@@ -24,6 +25,7 @@ function App() {
                 <Route path="songs" element={<Songs />} />
                 <Route path="playlists" element={<Playlists />} />
                 <Route path="albums" element={<Albums />} />
+                <Route path="favorites" element={<Favorites />} />
             </Route>
 
             <Route path="/controller" element={<Controller />} />

@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import bg1 from '../images/bg1.jpeg'
+import bg2 from '../images/bg2.jpg'
+import bg3 from '../images/bg3.jpg'
 
 const Home = () => {
 
   return (
     <>
-        <section className='w-full h-full p-3 md:p-10 bg-linear-to-t md:bg-linear-to-l from-[#F8B2B2] via-[#AF719D] to-[#8B639B] flex items-center justify-center'>
+        {/* <section className='w-full h-full p-3 md:p-10 bg-linear-to-t md:bg-linear-to-l from-[#F8B2B2] via-[#AF719D] to-[#8B639B] flex items-center justify-center'> */}
+        <section className='w-full h-full p-3 md:p-10 flex items-center justify-center bg-cover bg-center' style={{backgroundImage: `url(${bg1})`}}>
             
             <div className='md:w-[90%] md:h-[90%] h-full w-full md:rounded-3xl md:p-0 flex flex-col px-10  items-center'>
               <Navbar />

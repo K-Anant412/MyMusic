@@ -34,7 +34,8 @@ def show_all_songs():
                     "artist": song.artist,
                     "is_favorite": song.is_favorite,
                     "album": song.album,
-                    "duration": song.duration
+                    "duration": song.duration,
+                    "file_path": song.file_path
                 }
             )
 
@@ -42,6 +43,23 @@ def show_all_songs():
 
     except Exception as e:
         return error_response(message=str(e))
+
+
+@song_route.route("/stream/<int:song_id>/audio", methods=["GET"])
+def stream_song(song_id):
+    song = Songs.query.get(song_id)
+
+    if not song:
+        return error_response("Song not found", 404)
+
+    if not os.path.isfile(song.file_path):
+        return error_response("Audio file not found", 404)
+
+    return send_file(
+        song.file_path,
+        mimetype="audio/mpeg",
+        conditional=True
+    )
 
 
 @song_route.route("/search_by_id/<int:id>", methods=["GET"])

@@ -7,16 +7,13 @@ const Playlists = () => {
           
           <div className='border md:mt-0 -mt-15 rounded-tl-none rounded-tr-none flex md:rounded-2xl w-full h-full shrink-0 flex-col items-center justify-around pt-5 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] border-white/20 bg-white/10 backdrop-blur-md'>
           
-              <ul className='w-full h-full  overflow-x-hidden overflow-y-auto scrollbar-none flex flex-col items-center pt-10 gap-5'>
+              <ul className='w-full h-full overflow-x-hidden overflow-y-auto scrollbar-none flex flex-col items-center pt-10 gap-5'>
 
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white shrink-0'></li>
+                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white/50 shrink-0 flex items-center justify-start p-3 pl-10'>
+                  <div className='h-[90%] md:w-50 w-30 border border-white/50 rounded-xl'>
+
+                  </div>
+                </li>
 
               </ul>
 

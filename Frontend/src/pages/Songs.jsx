@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { songService } from '../service/api'
 import React from 'react'
 
@@ -12,6 +12,8 @@ import { SlLoop } from "react-icons/sl";
 import { MdOutlineReplay10 } from "react-icons/md";
 import { MdOutlineForward10 } from "react-icons/md";
 import { BsFileEarmarkMusic } from "react-icons/bs";
+
+
 const Songs = () => {
 
   const [songList, setSongList] = useState([])
@@ -19,6 +21,7 @@ const Songs = () => {
   const [error, setError] = useState(null)
 
   const [currentSong, setCurrentSong] = useState(null)
+  const songPath = useRef(null)
 
   useEffect(() => {
     const fetchSongs = async() =>{
@@ -29,7 +32,6 @@ const Songs = () => {
 
         if( response.data && response.data.success ){
           setSongList(response.data.data);
-          console.log("Fetched SOngs: ",response.data.data);
         }
 
       } catch (err) {
@@ -44,8 +46,22 @@ const Songs = () => {
     fetchSongs();
   }, [])
 
+  useEffect(() => {
+    if (!currentSong || !songPath.current) return;
+    songPath.current.play().catch((error) => {
+    });
+  }, [currentSong])
+  
   return (
     <>
+      <audio
+        ref={songPath} 
+        src={
+          currentSong
+            ? `/api/stream/${currentSong.id}/audio`
+            : undefined
+        }
+      />
         <section className='w-full h-full shrink-0 flex py-3 md:p-5 items-center justify-center flex-col md:flex-row gap-3 md:gap-8'>
           
           <div className='border hidden md:flex border-white/20 bg-white/10 backdrop-blur-md rounded-2xl w-[30%] h-full shrink-0 flex-col items-center justify-around pt-5 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)]'>
@@ -101,7 +117,7 @@ const Songs = () => {
               songList.map((song)=>{
                 return(
                   <li 
-                    key={song.song_id}
+                    key={song.id}
                     onClick={()=>setCurrentSong(song)}
                     className='border-b mt-1 w-full h-18 shrink-0 flex items-center p-1 md:p-3 text-white gap-2 md:gap-4'
                   >

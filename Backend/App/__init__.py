@@ -75,6 +75,7 @@ def create_app(config_name="development"):
     cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
     swagger.init_app(app)
     
+    
     from App.Route.songs import song_route
     app.register_blueprint(song_route, url_prefix='/api')
     
@@ -89,6 +90,7 @@ def create_app(config_name="development"):
             scan_local_music_folder(MUSIC_PATH)
         except Exception as e:
             print(f"Scanner intialization failed: {str(e)}")
-    
+
+    print(app.url_map)
     return app
     

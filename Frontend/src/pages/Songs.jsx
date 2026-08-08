@@ -20,7 +20,11 @@ const Songs = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const [currentSong, setCurrentSong] = useState(null)
+  const [currentSong, setCurrentSong] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isLooping, setIsLooping] = useState(false);
   const songPath = useRef(null)
 
   useEffect(() => {
@@ -48,10 +52,41 @@ const Songs = () => {
 
   useEffect(() => {
     if (!currentSong || !songPath.current) return;
-    songPath.current.play().catch((error) => {
-    });
+
+    songPath.current.load();
+
+    songPath.current.play()
+      .then(()=>{
+        setIsPlaying(true);
+      })
+      .catch((error) => {
+        console.log("error in playing: ", error);
+        setIsPlaying(false);
+      });
   }, [currentSong])
   
+  const togglePlay = () => {
+    if (!songPath.current || !currentSong) return;
+
+    if (songPath.current.paused) {
+      songPath.current.play();
+      setIsPlaying(true);
+    } else {
+      songPath.current.pause();
+      setIsPlaying(false);
+    }
+  };
+  const handleTimeUpdate = () => {
+    if (!songPath.current) return;
+
+      setCurrentTime(songPath.current.currentTime);
+    };
+
+    const handleLoadedMetadata = () => {
+      if (!songPath.current) return;
+
+      setDuration(songPath.current.duration);
+    };
   return (
     <>
       <audio
@@ -61,6 +96,9 @@ const Songs = () => {
             ? `/api/stream/${currentSong.id}/audio`
             : undefined
         }
+        loop={isLooping}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
       />
         <section className='w-full h-full shrink-0 flex py-3 md:p-5 items-center justify-center flex-col md:flex-row gap-3 md:gap-8'>
           
@@ -77,7 +115,19 @@ const Songs = () => {
                     <MdOutlineReplay10/>
                   </button>
 
-                  <input type="range" className="w-[65%] mt-2" />
+                  <input
+                    type="range"
+                    min="0"
+                    max={duration || 0}
+                    value={currentTime}
+                    onChange={(e) => {
+                      const time = Number(e.target.value);
+
+                      songPath.current.currentTime = time;
+                      setCurrentTime(time);
+                    }}
+                    className="w-[65%] mt-2"
+                  />
 
                   <button className="text-white text-3xl">
                     <MdOutlineForward10/>
@@ -95,8 +145,11 @@ const Songs = () => {
                     <button className="text-white text-4xl cursor-pointer">
                       <GrPrevious />
                     </button>
-                    <button className="text-white text-4xl cursor-pointer">
-                      <CiPause1 />
+                    <button 
+                      onClick={togglePlay}
+                      className="text-white text-4xl cursor-pointer"
+                    >
+                      {isPlaying ? <CiPause1 /> : <CiPlay1 />}
                     </button>
                     <button className="text-white text-4xl cursor-pointer">
                       <GrNext />

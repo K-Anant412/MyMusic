@@ -107,6 +107,30 @@ const Songs = () => {
     );
   };
 
+  const playNext = () =>{
+    if(!songPath || songList === 0) return;
+
+    const currentIndex = songList.findIndex(
+      song => song.id === currentSong.id
+    );
+
+    const nextIndex = (currentIndex + 1) % songList.length;
+
+    setCurrentSong(songList[nextIndex]);
+  };
+
+  const playPrevious = () =>{
+    if(!songPath || songList.length === 0) return;
+
+    const currentIndex = songList.findIndex(
+      song => song.id === currentSong.id
+    );
+
+    const previousIndex = ( currentIndex - 1 + songList.length) % songList.length;
+  
+    setCurrentSong(songList[previousIndex]);
+  };
+
   
   return (
     <>
@@ -132,7 +156,9 @@ const Songs = () => {
                 <h1 className="w-[65%] truncate text-[18px] font-semibold text-white">{currentSong?currentSong.title : "Select song"}</h1>
 
                 <div className="w-full h-fit flex items-center justify-center gap-3">
-                  <button className="text-white text-3xl">
+                  <button 
+                    onClick={rewind10}
+                    className="text-white text-3xl">
                     <MdOutlineReplay10/>
                   </button>
 
@@ -150,7 +176,9 @@ const Songs = () => {
                     className="w-[65%] mt-2"
                   />
 
-                  <button className="text-white text-3xl">
+                  <button 
+                    onClick={forward10}
+                    className="text-white text-3xl">
                     <MdOutlineForward10/>
                   </button>
                 </div>
@@ -172,7 +200,9 @@ const Songs = () => {
                     >
                       {isPlaying ? <CiPause1 /> : <CiPlay1 />}
                     </button>
-                    <button className="text-white text-4xl cursor-pointer">
+                    <button 
+                      onClick={playNext}
+                      className="text-white text-4xl cursor-pointer">
                       <GrNext />
                     </button>
                   </div>

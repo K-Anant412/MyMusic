@@ -131,7 +131,15 @@ const Songs = () => {
     setCurrentSong(songList[previousIndex]);
   };
 
-  
+  const handleSongEnded = () => {
+  if (isLooping) return;
+
+  playNext();
+  };
+
+  const toggleLoop = () =>{
+    setIsLooping(prev => !prev);
+  };
   return (
     <>
       <audio
@@ -144,6 +152,7 @@ const Songs = () => {
         loop={isLooping}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleSongEnded}
       />
         <section className='w-full h-full shrink-0 flex py-3 md:p-5 items-center justify-center flex-col md:flex-row gap-3 md:gap-8'>
           
@@ -186,12 +195,19 @@ const Songs = () => {
 
               <div className="border-none w-full h-25 flex items-center justify-center gap-6">
 
-                  <button className="w-fit h-fir text-2xl mt-1 text-white">
-                    <SlLoop/>
+                  <button
+                    onClick={toggleLoop}
+                    className={`w-fit h-fit text-2xl mt-1 cursor-pointer ${
+                      isLooping ? "text-blue-400" : "text-white"
+                    }`}
+                  >
+                    <SlLoop />
                   </button>
 
                   <div className="shrink-0 w-fit h-full flex items-center justify-around gap-12">
-                    <button className="text-white text-4xl cursor-pointer">
+                    <button 
+                      onClick={playPrevious}
+                      className="text-white text-4xl cursor-pointer">
                       <GrPrevious />
                     </button>
                     <button 

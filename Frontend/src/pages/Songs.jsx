@@ -76,17 +76,38 @@ const Songs = () => {
       setIsPlaying(false);
     }
   };
+
   const handleTimeUpdate = () => {
     if (!songPath.current) return;
 
       setCurrentTime(songPath.current.currentTime);
-    };
+  };
 
-    const handleLoadedMetadata = () => {
+  const handleLoadedMetadata = () => {
       if (!songPath.current) return;
 
       setDuration(songPath.current.duration);
-    };
+  };
+
+  const rewind10 = () =>{
+    if(!songPath.current) return;
+
+    songPath.current.currentTime = Math.max(
+      0,
+      songPath.current.currentTime - 10
+    );
+  };
+
+  const forward10 = ()=>{
+    if(!songPath.current) return;
+
+    songPath.current.currentTime = Math.min(
+      duration,
+      songPath.current.currentTime + 10
+    );
+  };
+
+  
   return (
     <>
       <audio

@@ -261,6 +261,7 @@ def show_allPlaylist():
         
         playlists = []
         for play in data:
+            
             playlists.append({
                 "id":play.id,
                 "name":play.name

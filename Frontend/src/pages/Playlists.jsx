@@ -1,6 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { songService } from '../service/api'
+
+
 
 const Playlists = () => {
+
+  const [existingPlaylist, setExistingPlaylists] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  
+  useEffect(() => {
+    const fetchPlaylists = async() =>{
+      try {
+        setLoading(true);
+        const response = await songService.getPlaylists();
+
+        if(response.data && response.data.success){
+          setExistingPlaylists(response.data.data)
+        };
+
+        console.log("Playlists: ", response.data.data);
+        
+      } catch (err) {
+        console.log(err);
+        setError("Could not connect to the music server.")
+      }finally{
+        setLoading(false);
+      }
+    }
+    fetchPlaylists();
+  }, [])
+  
+
+
   return (
     <>
        <section className='w-full h-full shrink-0 flex py-3 md:p-5 items-center justify-center flex-col md:flex-row gap-3 md:gap-8 '>

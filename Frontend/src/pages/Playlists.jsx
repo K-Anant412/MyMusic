@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { songService } from '../service/api'
 
-
+import { CiPause1 } from "react-icons/ci";
+import { CiPlay1 } from "react-icons/ci";
+import { CiCircleList } from "react-icons/ci";
+import { GoHeartFill } from "react-icons/go";
+import { GoHeart } from "react-icons/go";
 
 const Playlists = () => {
 
@@ -39,14 +43,25 @@ const Playlists = () => {
           
           <div className='border md:mt-0 -mt-15 rounded-tl-none rounded-tr-none flex md:rounded-2xl w-full h-full shrink-0 flex-col items-center justify-around pt-5 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] border-white/20 bg-white/10 backdrop-blur-md'>
           
-              <ul className='w-full h-full overflow-x-hidden overflow-y-auto scrollbar-none flex flex-col items-center pt-10 gap-5'>
+              <ul className='w-full h-full overflow-x-auto overflow-y-hidden scrollbar-none flex items-center p-6 pl-10 gap-8'>
 
-                <li className='w-[90%] md:h-50 h-40 border rounded-xl border-white/50 shrink-0 flex items-center justify-start p-3 pl-10'>
-                  <div className='h-[90%] md:w-50 w-30 border border-white/50 rounded-xl'>
+                <li className='w-[25%] h-full p-5 border-2 rounded-2xl border-white/40 flex flex-col items-center justify-center gap-4 shadow-[6px_8px_20px_rgba(0,0,0,0.22),-8px_-8px_20px_rgba(255,255,255,0.12)] shrink-0'>
+                  {/*  Playlist Cover Image */}
+                  <div className='w-full h-[50%] border rounded-3xl text-white/20'>
 
                   </div>
-                </li>
 
+                  <h1 className='text-2xl w-full h-fit flex items-center justify-center p-2 font-semibold text-white'>
+                    Playlist Name
+                  </h1>
+
+                  <div className='h-fit p-2 w-full flex items-center justify-around text-white'>
+                    <button> <GoHeart size={35} className='cursor-pointer transition-all duration-300 hover:text-white/45' /> </button>
+                    <button> <CiPlay1 size={35} className='cursor-pointer transition-all duration-300 hover:text-white/45' /> </button>
+                    <button> <CiCircleList size={35} className='cursor-pointer transition-all duration-300 hover:text-white/45' /> </button>
+                  </div>
+                </li>
+                
               </ul>
 
           </div>              

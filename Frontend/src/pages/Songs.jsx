@@ -12,6 +12,8 @@ import { SlLoop } from "react-icons/sl";
 import { MdOutlineReplay10 } from "react-icons/md";
 import { MdOutlineForward10 } from "react-icons/md";
 import { BsFileEarmarkMusic } from "react-icons/bs";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 
 
 const Songs = () => {
@@ -249,6 +251,10 @@ const Songs = () => {
                       <h2 className="text-xl md:text-[22px] font-semibold truncate">{song.title}</h2>
                       <h2 className="text-sm md:text-[16px] font-semibold truncate">{song.artist}</h2>
                     </div>
+
+                    
+                    <IoMdHeartEmpty className="relative text-4xl cursor-pointer right-10" onClick={()=>console.log("Song liked")} />
+
                   </li>
                 );
               })

@@ -173,6 +173,9 @@ def update_song_data(id):
             album:
                 type: string
                 example: Evolve
+            is_favorite:
+                type: boolean
+                example: false
 
     responses:
         200:
@@ -199,6 +202,9 @@ def update_song_data(id):
 
         if data.get("album", "").strip():
             song.album = data["album"].strip()
+            
+        if "is_favorite" in data:
+            song.is_favorite = bool(data["is_favorite"])
 
         db.session.commit()
 

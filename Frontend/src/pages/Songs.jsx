@@ -27,6 +27,7 @@ const Songs = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLooping, setIsLooping] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const songPath = useRef(null)
 
   useEffect(() => {
@@ -142,6 +143,31 @@ const Songs = () => {
   const toggleLoop = () =>{
     setIsLooping(prev => !prev);
   };
+
+  const likeSong = async() =>{
+    if( !currentSong ) return;
+
+    const newFavorite = !currentSong.is_favorite;
+
+    setIsFavorite(newFavorite);
+
+    try {
+      await songService.updateSong(currentSong.id, {is_favorite: newFavorite})
+      setCurrentSong(prev => ({
+      ...prev,
+      is_favorite: newFavoriteStatus
+    }));
+    } catch (err) {
+      console.error("Failed to update favorite:", err);
+      setIsFavorite(!newFavoriteStatus);
+    }
+  }
+  useEffect(() => {
+    if(currentSong){
+      setIsFavorite(currentSong.is_favorite);
+    }
+  }, [currentSong])
+  
   return (
     <>
       <audio
@@ -225,8 +251,8 @@ const Songs = () => {
                     </button>
                   </div>
 
-                  <button className="w-fit h-fir text-3xl mt-1 text-white">
-                    <MdQueueMusic/>
+                  <button className="w-fit h-fir text-3xl mt-1 text-white" onClick={likeSong}>
+                    {isFavorite ? <IoMdHeart/> :<IoMdHeartEmpty/>}
                   </button>
 
               </div>
@@ -253,7 +279,7 @@ const Songs = () => {
                     </div>
 
                     
-                    <IoMdHeartEmpty className="relative text-4xl cursor-pointer right-10" onClick={()=>console.log("Song liked")} />
+                    {/* <IoMdHeartEmpty className="relative text-4xl cursor-pointer right-10" onClick={()=>console.log("Song liked")} /> */}
 
                   </li>
                 );

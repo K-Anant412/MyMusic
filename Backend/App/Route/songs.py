@@ -56,7 +56,6 @@ def show_favorite_songs():
             description: A list of favorite songs
     """
     try:
-        # Filter songs where is_favorite is True
         raw_list = Songs.query.filter_by(is_favorite=True).all()
 
         if not raw_list:
@@ -95,7 +94,6 @@ def stream_song(song_id):
         mimetype="audio/mpeg",
         conditional=True
     )
-
 
 @song_route.route("/search_by_id/<int:id>", methods=["GET"])
 def search_song_byId(id):
@@ -136,7 +134,6 @@ def search_song_byId(id):
     except Exception as e:
         return error_response(message=str(e))
 
-
 @song_route.route("/search_by_title/<string:name>", methods=["GET"])
 def search_song_byName(name):
     """
@@ -176,7 +173,6 @@ def search_song_byName(name):
 
     except Exception as e:
         return error_response(message=str(e))
-
 
 @song_route.route("/update_songs_data/<int:id>", methods=["PUT"])
 def update_song_data(id):
@@ -246,7 +242,6 @@ def update_song_data(id):
         return success_response(message="Song updated")
     except Exception as e:
         return error_response(message=str(e))
-
 
 @song_route.route("/remove_song/<int:id>", methods=["DELETE"])
 def remove_song(id):

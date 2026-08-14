@@ -10,6 +10,8 @@ const API = axios.create({
 export const songService = {
     getSongs: () => API.get("/get_songs"),
 
+    getLikedSongs: () => API.get("/get_favorite_songs"),
+
     getSongById: (songId) =>
         API.get(`/search_by_id/${songId}`),
 

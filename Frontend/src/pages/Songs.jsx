@@ -155,11 +155,11 @@ const Songs = () => {
       await songService.updateSong(currentSong.id, {is_favorite: newFavorite})
       setCurrentSong(prev => ({
       ...prev,
-      is_favorite: newFavoriteStatus
+      is_favorite: newFavorite
     }));
     } catch (err) {
       console.error("Failed to update favorite:", err);
-      setIsFavorite(!newFavoriteStatus);
+      setIsFavorite(!newFavorite);
     }
   }
   useEffect(() => {

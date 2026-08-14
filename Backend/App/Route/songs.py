@@ -44,6 +44,41 @@ def show_all_songs():
     except Exception as e:
         return error_response(message=str(e))
 
+@song_route.route("/get_favorite_songs", methods=["GET"])
+def show_favorite_songs():
+    """
+    Get all favorite songs
+    ---
+    tags:
+        - SongList
+    responses:
+        200:
+            description: A list of favorite songs
+    """
+    try:
+        # Filter songs where is_favorite is True
+        raw_list = Songs.query.filter_by(is_favorite=True).all()
+
+        if not raw_list:
+            return error_response(message="No favorite songs found.")
+
+        songs = [
+            {
+                "id": song.song_id,
+                "title": song.title,
+                "artist": song.artist,
+                "is_favorite": song.is_favorite,
+                "album": song.album,
+                "duration": song.duration,
+                "file_path": song.file_path,
+            }
+            for song in raw_list
+        ]
+
+        return success_response("Favorite track list:", data=songs)
+
+    except Exception as e:
+        return error_response(message=str(e))
 
 @song_route.route("/stream/<int:song_id>/audio", methods=["GET"])
 def stream_song(song_id):

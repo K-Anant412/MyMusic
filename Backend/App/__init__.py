@@ -91,6 +91,6 @@ def create_app(config_name="development"):
         except Exception as e:
             print(f"Scanner intialization failed: {str(e)}")
 
-    print(app.url_map)
+    
     return app
     
